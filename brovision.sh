@@ -7,10 +7,11 @@ then
 	exit 2;
 fi
 
-if [ ! -z clients/local/nodes/$NODE.sh ]
+nodelist=(nodes/*/$NODE.sh)
+if [ ! -z $nodelist ]
 then
-	echo "sourcing $NODE settings from clients/local/nodes/$NODE.sh"
-	source clients/local/nodes/$NODE.sh
+	echo "sourcing $NODE settings from " $nodelist
+	source $nodelist
 fi
 
 if [ -z "$USER" ]
