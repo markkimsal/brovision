@@ -39,10 +39,16 @@ then
 	exit 2;
 fi
 
-for task in $TASKS
+isfilematch='.*\/.*$'
+for task in "${TASKS[@]}";
 do
+	[[ "$task" =~ $isfilematch ]]
+	if [ $? -eq 1 ]
+	then
+		task=$task"/run.sh"
+	fi
 CMD="$CMD
-$(<tasks/$task/run.sh)
+$(<tasks/$task)
 "
 done
 
