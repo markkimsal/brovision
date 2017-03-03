@@ -8,9 +8,9 @@ Start
 Start by defining a node to be provisioned.
 ```
 mkdir -p nodes/myservers/
-echo -e "HOST=192.168.1.x
-PORT=22
-USER=pi
+echo -e "SSH_HOST=192.168.1.x
+SSH_PORT=22
+SSH_USER=pi
 declare -a TASKS=('ping')
 " > nodes/myservers/raspberry_pi.sh
 ```
