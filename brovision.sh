@@ -49,6 +49,9 @@ then
 	exit 2;
 fi
 CMD=$DIFFS
+CMD="$CMD
+$(<inc/result.sh)
+"
 
 isfilematch='.*\/.*$'
 for task in "${TASKS[@]}";
