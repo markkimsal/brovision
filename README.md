@@ -66,7 +66,8 @@ In the above case, install-repozytorium is really only applicable to raspberry-p
 #nodes/MYSERVERS/my-rpi.sh
 
 declare -a TASKS=()
-TASKS+=('install-repozytorium.sh')
+TASKS+=('os/set-hostname.sh') # <-- generic tasks/os/set-hostname.sh
+TASKS+=('install-repozytorium.sh') # <-- first tries nodes/MYSERVERS/tasks/
 ```
 
 Notice that we include the file extension ".sh".  The brovision.sh file will examine any "tasks/" folder under the directory which holds the specified node file.  If it cannot find a file there, it seeks to look under tasks/*/*.sh.
