@@ -7,14 +7,18 @@ then
 	exit 2;
 fi
 
-#ORIGEXPORT=$(set -o posix; set)
-ORIGEXPORT=$(set)
-#ORIGEXPORT=$(env)
 nodelist=(nodes/*/$NODE.sh)
+
+#ORIGEXPORT=$(set -o posix; set)
+#ORIGEXPORT=$(env)
+ORIGEXPORT=$(set)
+
 if [ ! -z $nodelist ]
 then
-	echo "sourcing $NODE settings from" $nodelist
-	source $nodelist
+	NODE_GROUP=`dirname $nodelist`
+	NODE_FILE=`basename $nodelist`
+	echo "sourcing $NODE settings from" $NODE_GROUP"/"$NODE_FILE
+	source $NODE_GROUP"/"$NODE_FILE
 fi
 
 if [ -z "$SSH_USER" ]
@@ -56,6 +60,15 @@ $(<inc/result.sh)
 isfilematch='.*\/.*$'
 for task in "${TASKS[@]}";
 do
+	#if task references a custom task file name
+	# like nodes/myservers/tasks/foo.sh
+	if [ -f ./$NODE_GROUP/tasks/$task ]
+	then
+CMD="$CMD
+$(<./$NODE_GROUP/tasks/$task)
+"
+		continue
+	fi
 	[[ "$task" =~ $isfilematch ]]
 	if [ $? -eq 1 ]
 	then
