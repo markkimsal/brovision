@@ -93,4 +93,9 @@ done
 
 #echo "$CMD"
 #exit
-echo "$CMD" | ssh -p $SSH_PORT $SSH_USER@$SSH_HOST sudo /bin/bash
+if [ "$SSH_USER" == "root" ]
+then
+	echo "$CMD" | $(which ssh) -p $SSH_PORT $SSH_USER@$SSH_HOST /bin/bash
+else
+	echo "$CMD" | $(which ssh) -p $SSH_PORT $SSH_USER@$SSH_HOST sudo /bin/bash
+fi
