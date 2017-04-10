@@ -47,9 +47,21 @@ DIFFS=$(echo "$DIFFS" | grep -v "^'$" | grep -v no_proxy | grep -v "^_" | grep -
 
 echo "ssh to $NODE on port $SSH_PORT as $SSH_USER"
 
+#if TASKS were passed on command line, remove
+# node supplied tasks and overwrite with command line
+
+shift
+if [ "$#" -gt 0 ]; then
+	declare -a TASKS=()
+	while [ "$#" -gt 0 ]; do
+		TASKS+=($1)
+		shift
+	done
+fi
+
 if [ -z $TASKS ]
 then
-	echo "didn't set tasks in node file"
+	echo "didn't set tasks in node file or pass on command line"
 	exit 2;
 fi
 CMD=$DIFFS
